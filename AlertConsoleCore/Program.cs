@@ -14,6 +14,7 @@ namespace AlertConsoleCore
 		{
 			Console.WriteLine("主控台開始...");
 
+			//TODO:自行改寫要傳給 message 的值
 			string message = "警告訊息：" + DateTime.Now.ToShortTimeString();
 			var url = NotifyAlertMessageList(message);
 			Console.WriteLine($"NotifyAlertMessageList url: {url},Message:{message}");
@@ -28,6 +29,7 @@ namespace AlertConsoleCore
 		/// <returns></returns>
 		private static async Task<Uri> NotifyAlertMessageList(string Message)
 		{
+			//設定API網址
 			client.BaseAddress = new Uri(Config.signalRApiUrl.Value);
 			client.DefaultRequestHeaders.Accept.Clear();
 			client.DefaultRequestHeaders.Accept.Add(
@@ -40,10 +42,12 @@ namespace AlertConsoleCore
 					Message = Message
 				};
 
+				//第一支API
 				HttpResponseMessage response = await client.PostAsJsonAsync(
 					"api/Broadcast/Get", msgModel);
 				response.EnsureSuccessStatusCode();
 
+				//第二支API
 				HttpResponseMessage response2 = await client.PostAsJsonAsync(
 					"api/Broadcast/ShowSingleMessage", msgModel);
 				response2.EnsureSuccessStatusCode();
