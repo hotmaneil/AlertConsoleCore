@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebAPISignalR.Models
+﻿namespace ViewModel
 {
 	/// <summary>
 	/// 訊息 模型
